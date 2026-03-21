@@ -11,10 +11,9 @@ public class Main {
             File file = new File("data/pdf/" + i + ".pdf");
             PdfParser parcer = new PdfParser();
 
-            String[] splitData = parcer.parseAll(file);
-            for (String data : splitData) {
-                System.out.println(data);
-            }
+            Parcel parcel1 = parcer.pdfToParcel(file);
+
+            System.out.println(parcel1);
         }
     }
 }

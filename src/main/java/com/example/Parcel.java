@@ -1,7 +1,10 @@
 package com.example;
 
+import com.deepoove.poi.data.PictureRenderData;
+
 public class Parcel {
     private String barcodeNum;
+    private PictureRenderData barcode;
     private String index;
     private String address;
     private String receiver;
@@ -20,6 +23,10 @@ public class Parcel {
     // Геттеры
     public String getBarcodeNum() {
         return barcodeNum;
+    }
+
+    public PictureRenderData getBarcode() {
+        return barcode;
     }
 
     public String getIndex() {
@@ -50,6 +57,13 @@ public class Parcel {
         this.address = address;
     }
 
+    public void setBarcode(PictureRenderData barcode) {
+        if (barcode == null) {
+            throw new IllegalArgumentException("Адрес не может быть null");
+        }
+        this.barcode = barcode;
+    }
+
     public void setReceiver(String receiver) {
         if (receiver == null) {
             throw new IllegalArgumentException("Получатель не может быть null");
@@ -59,6 +73,6 @@ public class Parcel {
 
     @Override
     public String toString() {
-        return String.format("Parcel[barcode='%s',\n index='%s',\n address='%s',\n receiver='%s']", barcodeNum, index, address, receiver);
+        return String.format("Parcel[barcodeNum='%s',\n index='%s',\n address='%s',\n receiver='%s',\n barcode='%s']", barcodeNum, index, address, receiver, barcode);
     }
 }

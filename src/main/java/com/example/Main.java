@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+// import javafx.application.Application;
+
 public class Main {
     public static void main(String[] args) {
-        PdfParser parcer = new PdfParser();
+        // Application.launch( Main.class, args);
+
+        PdfParser parser = new PdfParser();
         BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
         ExcelManager excelManager = new ExcelManager();
         WordCreator wordCreator = new WordCreator();
@@ -21,7 +25,7 @@ public class Main {
             System.out.println("FILE " + i + ".pdf:");
             File pdfFile = new File("data/pdf/" + i + ".pdf"); //  Инициализация pdf файла
 
-            Parcel parcel = parcer.pdfToParcel(pdfFile);
+            Parcel parcel = parser.pdfToParcel(pdfFile);
             System.out.println(parcel);
             parcels.add(parcel);
 

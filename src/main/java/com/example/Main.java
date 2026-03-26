@@ -1,60 +1,41 @@
 package com.example;
 
-import com.deepoove.poi.data.PictureRenderData;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.Group;
+import javafx.scene.text.Text;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
-// import javafx.application.Application;
+public class Main extends Application{
 
-public class Main {
     public static void main(String[] args) {
-        // Application.launch( Main.class, args);
 
-        PdfParser parser = new PdfParser();
-        BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
-        ExcelManager excelManager = new ExcelManager();
-        WordCreator wordCreator = new WordCreator();
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        // 1. Проверяем путь перед попыткой загрузки
+        java.net.URL resourceUrl = getClass().getResource("/frontend/test2.fxml");
         
-        excelManager.initSheet("test");
-        ArrayList<Parcel> parcels = new ArrayList<>();
-
-        for (int i = 1; i < 15; i++) {
-            System.out.println("--------------------");
-            System.out.println("FILE " + i + ".pdf:");
-            File pdfFile = new File("data/pdf/" + i + ".pdf"); //  Инициализация pdf файла
-
-            Parcel parcel = parser.pdfToParcel(pdfFile);
-            System.out.println(parcel);
-            parcels.add(parcel);
-
-            try {
-                PictureRenderData barcode = barcodeGenerator.generateParcelBarcode(parcel.getBarcodeNum());
-                parcel.setBarcode(barcode);
-                // ImageIO.write(barcode, "png", barcodeImage);
-            } catch (Exception err){
-                err.printStackTrace();
-            }
-
-            excelManager.tableAdd(parcel);
-        }
-        String excelPath = "data/excel-tables/test.xlsx";
-        excelManager.saveToFile(excelPath);
-
-        List<Map<String, Parcel>> pages = wordCreator.cutToPages(parcels);
-
-        for (Map<String, Parcel> page : pages) {
-            for (String key : page.keySet()) {
-                System.out.println(key + ": " + page.get(key));
-            }
-        }
-
-        try {
-            wordCreator.createDocx(pages);
-        } catch (Exception err) {
-            err.printStackTrace();
+        if (resourceUrl == null) {
+            System.err.println("❌ ОШИБКА: Файл test.fxml не найден!");
+            System.err.println("Убедись, что после компиляции файл физически скопирован средой разработки в папку target/classes/frontend/ (или bin/frontend/)");
+            return; // Останавливаем запуск окна, чтобы избежать NullPointerException
         }
         
+        System.out.println("✅ Файл успешно найден по пути: " + resourceUrl);
+
+        // 2. Если файл найден, безопасно загружаем интерфейс
+        Parent root = FXMLLoader.load(resourceUrl); 
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.setTitle("JavaFX Test");
+        stage.setWidth(600);
+        stage.setHeight(500);
+        stage.show();
     }
 }

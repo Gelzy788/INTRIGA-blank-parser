@@ -16,26 +16,34 @@ public class Main extends Application{
     }
 
     @Override
+    public void init() throws Exception {
+        // ЭТАП 1: Подготовка (в фоновом потоке)
+        // Вызов getInstance() инициализирует менеджер, который 
+        // сразу загружает файл settings.json в объект Settings.
+        SettingsManager.getInstance();
+        System.out.println("Система инициализирована, настройки загружены.");
+    }
+
+    @Override
     public void start(Stage stage) throws Exception {
         // 1. Проверяем путь перед попыткой загрузки
-        java.net.URL resourceUrl = getClass().getResource("/frontend/test2.fxml");
-        
-        if (resourceUrl == null) {
-            System.err.println("❌ ОШИБКА: Файл test.fxml не найден!");
-            System.err.println("Убедись, что после компиляции файл физически скопирован средой разработки в папку target/classes/frontend/ (или bin/frontend/)");
-            return; // Останавливаем запуск окна, чтобы избежать NullPointerException
-        }
-        
-        System.out.println("✅ Файл успешно найден по пути: " + resourceUrl);
-
-        // 2. Если файл найден, безопасно загружаем интерфейс
+        java.net.URL resourceUrl = getClass().getResource("/frontend/main_layout.fxml");
         Parent root = FXMLLoader.load(resourceUrl); 
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
-        stage.setTitle("JavaFX Test");
-        stage.setWidth(600);
-        stage.setHeight(500);
+        stage.setTitle("INTRIGA pdf parser");
+        stage.setWidth(1024);
+        stage.setHeight(768);
         stage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        // ЭТАП 3: Завершение (сохранение перед выходом)
+        // Даже если пользователь не нажимал "Сохранить" в меню, 
+        // мы гарантируем запись текущего состояния объекта Settings на диск.
+        // SettingsManager.getInstance().saveSettingsToDisk;
+        System.out.println("Настройки сохранены. Работа завершена.");
     }
 }

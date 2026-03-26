@@ -9,7 +9,9 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
+        <poi.opens>--add-opens org.apache.poi.ooxml/org.apache.poi.xwpf.usermodel=poi.tl</poi.opens>
     </properties>
 
     <dependencies>
@@ -46,6 +48,7 @@
             <artifactId>javafx-fxml</artifactId>
             <version>21.0.2</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -56,6 +59,7 @@
             <artifactId>log4j-api</artifactId>
             <version>2.23.1</version>
         </dependency>
+
         <dependency>
             <groupId>com.deepoove</groupId>
             <artifactId>poi-tl</artifactId>
@@ -71,10 +75,16 @@
                 <version>3.11.0</version>
                 <configuration>
                     <release>17</release>
-                    <compilerArgs>
-                        <arg>--add-opens</arg>
-                        <arg>org.apache.poi.ooxml/org.apache.poi.xwpf.usermodel=poi.tl</arg>
-                    </compilerArgs>
+                    </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.example.Main</mainClass>
+                    <commandlineArgs>${poi.opens}</commandlineArgs>
                 </configuration>
             </plugin>
 
@@ -85,8 +95,7 @@
                 <configuration>
                     <mainClass>com.example.Main</mainClass>
                     <options>
-                        <option>--add-opens</option>
-                        <option>org.apache.poi.ooxml/org.apache.poi.xwpf.usermodel=poi.tl</option>
+                        <option>${poi.opens}</option>
                     </options>
                 </configuration>
             </plugin>

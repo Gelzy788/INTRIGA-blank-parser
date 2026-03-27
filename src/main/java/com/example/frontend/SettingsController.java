@@ -7,6 +7,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 import java.io.File;
+
+import com.example.SettingsManager;
+
 import javafx.scene.Parent;
 
 public class SettingsController {
@@ -23,38 +26,37 @@ public class SettingsController {
     @FXML private Button btnSaveSettings;
 
     // Переменная для хранения выбранной темы
-    private boolean isDarkMode = false;
+    private boolean isDarkMode = SettingsManager.getInstance().getIsDarkMode();
 
     @FXML
     public void initialize() {
+        // --- 0. ЗАГРУЗКА ТЕКУЩИХ ДАННЫХ В ИНТЕРФЕЙС ---
+        excelPathField.setText(SettingsManager.getInstance().getExcelPath());
+        docxPathField.setText(SettingsManager.getInstance().getDocxPath());
         
+        // Сразу при открытии настроек перекрашиваем кнопки в правильный цвет
+        updateThemeButtons(); 
+
         // --- 1. Логика выбора папок ---
-        btnBrowseExcel.setOnAction(e -> chooseDirectory(excelPathField, "Выберите папку для Excel"));
-        btnBrowseDocx.setOnAction(e -> chooseDirectory(docxPathField, "Выберите папку для Word"));
+        btnBrowseExcel.setOnAction(e -> chooseDirectory(excelPathField, "Выберите папку для Excel", "excel"));
+        btnBrowseDocx.setOnAction(e -> chooseDirectory(docxPathField, "Выберите папку для Word", "word"));
 
         // --- 2. Логика переключения темы ---
         btnThemeLight.setOnAction(e -> {
             isDarkMode = false;
+            SettingsManager.getInstance().setIsDarkMode(false);
             updateThemeButtons();
         });
 
         btnThemeDark.setOnAction(e -> {
             isDarkMode = true;
+            SettingsManager.getInstance().setIsDarkMode(true);
             updateThemeButtons();
-        });
-
-        // --- 3. Логика сохранения ---
-        btnSaveSettings.setOnAction(e -> {
-            System.out.println("--- НАСТРОЙКИ СОХРАНЕНЫ ---");
-            System.out.println("Путь Excel: " + excelPathField.getText());
-            System.out.println("Путь Word: " + docxPathField.getText());
-            System.out.println("Темная тема: " + isDarkMode);
-            // Здесь в будущем будет вызов класса, сохраняющего это в JSON или .properties файл
         });
     }
 
     // Вспомогательный метод для вызова окна выбора папки
-    private void chooseDirectory(TextField targetField, String title) {
+    private void chooseDirectory(TextField targetField, String title, String pathType) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle(title);
         
@@ -69,6 +71,13 @@ public class SettingsController {
 
         if (selectedDirectory != null) {
             targetField.setText(selectedDirectory.getAbsolutePath());
+            if (pathType == "excel") {
+                SettingsManager.getInstance().setExcelPath(selectedDirectory.getAbsolutePath());
+            }
+            else {
+                SettingsManager.getInstance().setDocxPath(selectedDirectory.getAbsolutePath());
+            }
+            
         }
     }
 

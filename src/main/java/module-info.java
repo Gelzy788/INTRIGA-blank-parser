@@ -25,11 +25,14 @@ module com.example.blankparser {
     // 7. poi-tl
     requires poi.tl; 
 
+    // 8. json
+    requires org.json;
+
     // Разрешаем JavaFX получать доступ к корневому пакету (где лежит Main.java)
     opens com.example to javafx.fxml;
     exports com.example;
 
-    // 8. Разрешения для нового пакета фронтенда
+    // Разрешения для нового пакета фронтенда
     opens com.example.frontend to javafx.fxml;
     exports com.example.frontend;
 }

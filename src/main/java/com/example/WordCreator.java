@@ -4,6 +4,7 @@ import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.data.Pictures;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ public class WordCreator {
     }
 
     // Генерация docx файла
-    public void createDocx(List<Map<String, Parcel>> pages) throws IOException {
+    public void createDocx(List<Map<String, Parcel>> pages, String filePath) throws IOException {
         // Кладем список в словарь, чтобы библиотека поняла, к какому тегу он принадлежит
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("pages", pages);
@@ -60,6 +61,6 @@ public class WordCreator {
         // Компилируем файл по шалону
         XWPFTemplate.compile("src/main/resources/template.docx")
                             .render(templateData)
-                            .writeToFile("test.docx");
+                            .writeToFile(filePath);
     }
 }

@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainController {
 
@@ -13,6 +15,9 @@ public class MainController {
     @FXML private Button btnQueue;
     @FXML private Button btnHistory;
     @FXML private Button btnSettings;
+
+    // Кэш для хранения уже загруженных экранов
+    private Map<String, Parent> viewsCache = new HashMap<>();
 
     @FXML
     public void initialize() {
@@ -27,17 +32,28 @@ public class MainController {
             // loadPage("view_history.fxml");
         });
         
-        btnSettings.setOnAction(e -> {loadPage("view_settings.fxml");});
+        btnSettings.setOnAction(e -> loadPage("view_settings.fxml"));
     }
 
     private void loadPage(String fxmlFileName) {
         try {
-            URL fileUrl = getClass().getResource("/frontend/" + fxmlFileName);
-            if (fileUrl == null) {
-                throw new java.io.FileNotFoundException("FXML файл не найден: " + fxmlFileName);
+            // 1. Проверяем, есть ли уже этот экран в нашем кэше
+            if (!viewsCache.containsKey(fxmlFileName)) {
+                
+                // Если нет - загружаем его из файла в первый раз
+                URL fileUrl = getClass().getResource("/frontend/" + fxmlFileName);
+                if (fileUrl == null) {
+                    throw new java.io.FileNotFoundException("FXML файл не найден: " + fxmlFileName);
+                }
+                Parent newScreen = FXMLLoader.load(fileUrl);
+                
+                // Сохраняем загруженный экран в кэш
+                viewsCache.put(fxmlFileName, newScreen);
             }
-            Parent newScreen = FXMLLoader.load(fileUrl);
-            contentArea.setCenter(newScreen); // Вставляем интерфейс в центр
+
+            // 2. Берем готовый экран из кэша и вставляем в центр
+            contentArea.setCenter(viewsCache.get(fxmlFileName));
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

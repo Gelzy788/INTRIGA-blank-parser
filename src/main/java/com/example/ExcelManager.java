@@ -38,7 +38,6 @@ public class ExcelManager {
         }
     }
 
-    // Больше не нужно передавать Sheet снаружи
     public void tableAdd(Parcel parcel) {
         if (this.currentSheet == null) {
             throw new IllegalStateException("Лист не инициализирован! Вызовите initSheet() перед добавлением данных.");

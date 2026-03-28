@@ -5,7 +5,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.time.LocalDateTime;;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;;
 
 public class AppController {
     // TODO: Убрать системные логи перед релизом
@@ -45,7 +46,7 @@ public class AppController {
         }
 
         // Сохраняем xlsx таблицу по пути из настроек
-        excelManager.saveToFile(SettingsManager.getInstance().getExcelPath() + "/" + LocalDateTime.now() + ".xlsx");
+        excelManager.saveToFile(SettingsManager.getInstance().getExcelPath() + "/" + LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES) + ".xlsx");
 
         List<Map<String, Parcel>> pages = wordCreator.cutToPages(parcels); // Слздается список страниц, в котором каждый элемент - Map с данными для однйо страницы
 

@@ -310,3 +310,36 @@
     -fx-cursor: hand;
 }
 .btn-process-red:hover { -fx-background-color: -theme-red-hover; }
+
+/* ===================================================================== */
+/* 6. СКРОЛЛБАР В СПИСКАХ                                                */
+/* ===================================================================== */
+.custom-list-view .scroll-bar:vertical,
+.custom-list-view .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+.custom-list-view .scroll-bar:vertical .track,
+.custom-list-view .scroll-bar:horizontal .track {
+    -fx-background-color: -theme-base-bg;
+    -fx-border-color: -theme-border-light;
+    -fx-border-width: 0 0 0 1px;
+}
+.custom-list-view .scroll-bar:vertical .thumb,
+.custom-list-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: -theme-border-dark;
+    -fx-background-radius: 0;
+}
+.custom-list-view .scroll-bar:vertical .thumb:hover,
+.custom-list-view .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: -theme-text-muted;
+}
+.custom-list-view .scroll-bar .increment-button,
+.custom-list-view .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+.custom-list-view .scroll-bar .increment-arrow,
+.custom-list-view .scroll-bar .decrement-arrow {
+    -fx-shape: " "; /* Убираем стандартные треугольники */
+    -fx-padding: 0;
+}

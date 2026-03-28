@@ -13,7 +13,6 @@ public class MainController {
 
     @FXML private BorderPane contentArea;
     @FXML private Button btnQueue;
-    @FXML private Button btnHistory;
     @FXML private Button btnSettings;
 
     // Кэш для хранения уже загруженных экранов
@@ -26,12 +25,6 @@ public class MainController {
 
         // Привязываем кнопки к загрузке разных файлов
         btnQueue.setOnAction(e -> loadPage("view_queue.fxml"));
-        
-        btnHistory.setOnAction(e -> {
-            System.out.println("Тут будет загружаться view_history.fxml");
-            // loadPage("view_history.fxml");
-        });
-        
         btnSettings.setOnAction(e -> loadPage("view_settings.fxml"));
     }
 

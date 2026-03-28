@@ -27,6 +27,8 @@ public class QueueController {
     @FXML private Label fileCountLabel;
     @FXML private ListView<String> fileListView;
     @FXML private Button processButton;
+    @FXML private Button removeFileButton;
+    @FXML private Button clearListButton;
 
     private List<File> fileList = new ArrayList<>();
 
@@ -50,6 +52,21 @@ public class QueueController {
                 }
                 updateCounters();
             }
+        });
+
+        removeFileButton.setOnAction(e -> {
+            int selectedIndex = fileListView.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0) {
+                fileListView.getItems().remove(selectedIndex);
+                fileList.remove(selectedIndex);
+                updateCounters();
+            }
+        });
+
+        clearListButton.setOnAction(e -> {
+            fileListView.getItems().clear();
+            fileList.clear();
+            updateCounters();
         });
 
         processButton.setOnAction(event -> {

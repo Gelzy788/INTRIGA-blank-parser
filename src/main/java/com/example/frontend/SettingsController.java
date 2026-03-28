@@ -22,7 +22,6 @@ public class SettingsController {
     @FXML private Button btnThemeLight;
     @FXML private Button btnThemeDark;
     
-    @FXML private Button btnSaveSettings;
 
     // Переменная для хранения выбранной темы
     private boolean isDarkMode = SettingsManager.getInstance().getIsDarkMode();

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -15,18 +14,12 @@
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="top-navbar" BorderPane.alignment="CENTER">
             <padding><Insets bottom="10.0" left="20.0" right="20.0" top="10.0" /></padding>
-            <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="54.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                 <image><Image url="@media/logo.png" /></image>
             </ImageView>
             <Label styleClass="brand-title" text="INTRIGA" />
             
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-                <padding><Insets left="30.0" /></padding>
-                <Label styleClass="nav-link" text="Dashboard" />
-                <Label styleClass="nav-link" text="Analytics" />
-            </HBox>
             <Region HBox.hgrow="ALWAYS" />
-            <Label styleClass="icon-label" text="🔔" />
             <Label styleClass="icon-label" text="👤" />
         </HBox>
     </top>
@@ -34,13 +27,12 @@
     <left>
         <VBox prefWidth="220.0" styleClass="sidebar" BorderPane.alignment="CENTER">
             <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding>
-            <Label styleClass="project-subtitle" text="Technical Monolith" />
+            
             <Label styleClass="version-text" text="v1.0.42" />
             
             <VBox spacing="15.0" VBox.vgrow="ALWAYS">
                 <padding><Insets top="30.0" /></padding>
-                <Button fx:id="btnQueue" mnemonicParsing="false" styleClass="menu-button, menu-item-active" text="📂 Queue" />
-                <Button fx:id="btnHistory" mnemonicParsing="false" styleClass="menu-button" text="⏱ History" />
+                <Button fx:id="btnQueue" mnemonicParsing="false" styleClass="menu-button, menu-item-active" text="🏠 Main" />
                 <Button fx:id="btnSettings" mnemonicParsing="false" styleClass="menu-button" text="⚙ Settings" />
             </VBox>
         </VBox>

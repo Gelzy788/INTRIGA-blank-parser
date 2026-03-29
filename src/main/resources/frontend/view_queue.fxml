@@ -18,7 +18,6 @@
                 <Region prefHeight="30.0" prefWidth="4.0" styleClass="red-accent-line" />
                 <Label styleClass="page-title" text="PDF PROCESSING ENGINE" />
             </HBox>
-            <Label styleClass="system-id" text="SYSTEM_ID: INTRIGA_MOD_42_ALPHA" />
         </VBox>
     </top>
 

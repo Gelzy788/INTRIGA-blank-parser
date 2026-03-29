@@ -15,7 +15,6 @@ public class Main extends Application{
     @Override
     public void init() throws Exception {
         SettingsManager.getInstance(); // Создаем объект класса SettingsManager
-        SettingsManager.getInstance().loadSettingsFromDisk(); // Загружаем настройки
         System.out.println("Система инициализирована, настройки загружены.");
     }
 

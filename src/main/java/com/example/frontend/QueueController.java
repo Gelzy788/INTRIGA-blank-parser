@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import javafx.scene.layout.Region;
 import java.awt.Desktop;
@@ -88,7 +90,7 @@ public class QueueController {
                     processButton.setText("ОТПРАВИТЬ НА ОБРАБОТКУ");
                     processButton.setDisable(false);
 
-                    showCompletionDialog(report.getSuccessCount(), report.getErrorsCount());
+                    showCompletionDialog(report.getSuccessCount(), report.getErrorsCount(), report.getErrors().keySet());
                 });
             });
         });
@@ -100,7 +102,7 @@ public class QueueController {
         processButton.setText("ОТПРАВИТЬ НА ОБРАБОТКУ (" + count + ") >");
     }
 
-    private void showCompletionDialog(int successCount, int errorCount) {
+    private void showCompletionDialog(int successCount, int errorCount, Set<String> filesWithErrors) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Отчет системы");
         alert.setHeaderText("Обработка файлов успешно завершена!");
@@ -108,7 +110,10 @@ public class QueueController {
         // Формируем текст отчета
         String content = "Успешно обработано: " + successCount + " файлов.\n";
         if (errorCount > 0) {
-            content += "Ошибок при обработке: " + errorCount + " файлов.";
+            content += "Ошибок при обработке: " + errorCount + " файлов:\n";
+            for (String file : filesWithErrors) {
+                content += file + "\n";
+            }
         }
         alert.setContentText(content);
 
@@ -151,7 +156,6 @@ public class QueueController {
             }
         } else {
             System.err.println("Папка не найдена или была удалена: " + path);
-            // Тут можно вывести Alert, что папка не существует
         }
     } catch (IOException e) {
         System.err.println("Ошибка при открытии папки: " + e.getMessage());

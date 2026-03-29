@@ -12,18 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WordCreator {
-    public void putData(String name) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("name", name);
-        data.put("barcode", Pictures.ofLocal("data/barcodes/1.png").size(181, 39).create());
-        try {
-            XWPFTemplate.compile("src/main/resources/test.docx").render(data).writeToFile("finishTest.docx");
-        } catch (IOException err) {
-            err.printStackTrace();
-        }
-        
-    }
-
     public List<Map<String, Parcel>> cutToPages(List<Parcel> allParcels) {
         List<Map<String, Parcel>> pages = new ArrayList<>();
         
@@ -59,8 +47,12 @@ public class WordCreator {
         templateData.put("pages", pages);
 
         // Компилируем файл по шалону
-        XWPFTemplate.compile("src/main/resources/template.docx")
-                            .render(templateData)
-                            .writeToFile(filePath);
+        try (java.io.InputStream templateStream = getClass().getResourceAsStream("/template.docx")) {
+            
+            XWPFTemplate.compile(templateStream)
+            .render(templateData)
+            .writeToFile(filePath);
+        }
+        
     }
 }

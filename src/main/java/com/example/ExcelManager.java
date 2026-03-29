@@ -1,9 +1,9 @@
 package com.example;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font; // Убрал лишнюю ;
@@ -16,7 +16,7 @@ public class ExcelManager {
     private Sheet currentSheet; // Храним лист внутри менеджера
 
     public ExcelManager() {
-        this.book = new HSSFWorkbook();
+        this.book = new XSSFWorkbook();
     }
 
     // Теперь метод просто настраивает лист внутри себя

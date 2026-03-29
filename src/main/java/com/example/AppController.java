@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class AppController {
-    // TODO: Убрать системные логи перед релизом
     public ProcessingReport compileFiles(List<File> filesList) {
         PdfParser parser = new PdfParser();
         BarcodeGenerator barcodeGenerator = new BarcodeGenerator();

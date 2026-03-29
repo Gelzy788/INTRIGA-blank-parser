@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class AppController {
     // TODO: Убрать системные логи перед релизом
@@ -15,6 +16,7 @@ public class AppController {
         BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
         ExcelManager excelManager = new ExcelManager();
         WordCreator wordCreator = new WordCreator();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm");
         
         ProcessingReport reports = new ProcessingReport();
         ArrayList<Parcel> parcels = new ArrayList<>();
@@ -45,8 +47,10 @@ public class AppController {
             reports.addSuccess(); // Добавляем в reports одну успешную обработку
         }
 
+        String timeNow = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).format(formatter).toString();
+
         // Сохраняем xlsx таблицу по пути из настроек
-        excelManager.saveToFile(SettingsManager.getInstance().getExcelPath() + "/" + LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES) + ".xlsx");
+        excelManager.saveToFile(SettingsManager.getInstance().getExcelPath() + "/" + timeNow + ".xlsx");
 
         List<Map<String, Parcel>> pages = wordCreator.cutToPages(parcels); // Слздается список страниц, в котором каждый элемент - Map с данными для однйо страницы
 
@@ -59,7 +63,7 @@ public class AppController {
 
         // Сохранение docx документа
         try {
-            wordCreator.createDocx(pages, SettingsManager.getInstance().getDocxPath() + "/" + LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES) + ".docx");
+            wordCreator.createDocx(pages, SettingsManager.getInstance().getDocxPath() + "/" + timeNow + ".docx");
         } catch (Exception err) {
             err.printStackTrace();
         }

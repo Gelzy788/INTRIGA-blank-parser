@@ -18,3 +18,5 @@ buildNumber.properties
 
 .vscode/
 .apt_generated_tests/
+/shade
+/build

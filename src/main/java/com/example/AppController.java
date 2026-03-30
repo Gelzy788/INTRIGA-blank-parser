@@ -8,6 +8,7 @@ import java.util.Map;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 
 public class AppController {
     public ProcessingReport compileFiles(List<File> filesList) {
@@ -22,6 +23,9 @@ public class AppController {
         
         // Инициализация таблицы excel
         excelManager.initSheet("blanks");
+
+        // Переворачиваем список
+        Collections.reverse(filesList);
 
         // Проходимся по всем файлам из списка
         for (File blank : filesList) {
